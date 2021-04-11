@@ -73,15 +73,15 @@ func NewChessComClient(timeout time.Duration, options ...ClientOption) (hr *Ches
 	return
 }
 
-func (client *ChessComClient) Do(ctx context.Context, req *http.Request) (*http.Response, context.CancelFunc, error) {
+func (c *ChessComClient) Do(ctx context.Context, req *http.Request) (*http.Response, context.CancelFunc, error) {
 
-	c, cancel := context.WithTimeout(ctx, client.Timeout)
+	context, cancel := context.WithTimeout(ctx, c.Timeout)
 
-	resp, err := client.Client.Do(req.WithContext(c))
+	resp, err := c.Client.Do(req.WithContext(context))
 
 	return resp, cancel, err
 }
 
-func (client *ChessComClient) Stop() {
-	client.Transport.CloseIdleConnections()
+func (c *ChessComClient) Stop() {
+	c.Transport.CloseIdleConnections()
 }

@@ -38,7 +38,6 @@ type GameArchive struct {
 
 func (c *ChessComClient) GetGameArchive(ctx context.Context, screenName string, archiveMonth time.Time) (*GameArchive, error) {
 	req := &http.Request{URL: urlFromString(fmt.Sprintf(gameArchiveUrl, screenName, archiveMonth.Year(), stringMonthFromTime(archiveMonth)))}
-	fmt.Println(req)
 	resp, _, err := c.Do(ctx, req)
 	if err != nil {
 		return nil, err
